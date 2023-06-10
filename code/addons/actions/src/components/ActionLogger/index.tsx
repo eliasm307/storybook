@@ -23,8 +23,11 @@ interface InspectorProps {
   theme: Theme & { addonActionsTheme?: string };
   sortObjectKeys: boolean;
   showNonenumerable: boolean;
-  name: any;
+  name: string;
   data: any;
+  expandLevel?: number;
+  expandPaths?: string | string[];
+  table?: boolean;
 }
 
 const ThemedInspector = withTheme(({ theme, ...props }: InspectorProps) => (
@@ -48,6 +51,9 @@ export const ActionLogger = ({ actions, onClear }: ActionLoggerProps) => (
               showNonenumerable={false}
               name={action.data.name}
               data={action.data.args || action.data}
+              expandLevel={action.options.expandLevel}
+              expandPaths={action.options.expandPaths}
+              table={action.options.asTable}
             />
           </InspectorContainer>
         </Action>

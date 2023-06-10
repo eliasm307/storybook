@@ -4,6 +4,9 @@ interface Options {
   depth: number; // backards compatibility, remove in 7.0
   clearOnStoryChange: boolean;
   limit: number;
+  asTable: boolean;
+  expandPaths: string | string[];
+  expandLevel: number;
 }
 
 export type ActionOptions = Partial<Options> & Partial<TelejsonOptions>;

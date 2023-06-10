@@ -9,6 +9,7 @@ const createChannel = () => {
   return channel;
 };
 const getChannelData = (channel) => channel.emit.mock.calls[0][1].data.args;
+const getChannelOptions = (channel) => channel.emit.mock.calls[0][1].options;
 
 describe('Action', () => {
   it('with one argument', () => {
@@ -17,6 +18,7 @@ describe('Action', () => {
     action('test-action')('one');
 
     expect(getChannelData(channel)).toEqual('one');
+    expect(getChannelOptions(channel)).toEqual({ depth: 1 });
   });
 
   it('with multiple arguments', () => {
@@ -25,6 +27,7 @@ describe('Action', () => {
     action('test-action')('one', 'two', 'three');
 
     expect(getChannelData(channel)).toEqual(['one', 'two', 'three']);
+    expect(getChannelOptions(channel)).toEqual({ depth: 1 });
   });
 });
 
@@ -53,6 +56,7 @@ describe('Depth config', () => {
         },
       },
     });
+    expect(getChannelOptions(channel)).toEqual({ depth });
   });
 
   it('per action depth option overrides global config', () => {
@@ -89,6 +93,7 @@ describe('Depth config', () => {
         },
       },
     });
+    expect(getChannelOptions(channel)).toEqual({ depth: 3 });
   });
 });
 
@@ -119,6 +124,7 @@ describe('allowFunction config', () => {
         },
       },
     });
+    expect(getChannelOptions(channel)).toEqual({ depth: 1 });
   });
 
   // TODO: this test is pretty pointless, as the real channel isn't used, nothing is changed
@@ -148,5 +154,6 @@ describe('allowFunction config', () => {
         },
       },
     });
+    expect(getChannelOptions(channel)).toEqual({ depth: 1 });
   });
 });
